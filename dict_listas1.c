@@ -164,6 +164,7 @@ tipoNodo* eliminarPR(tipoNodo* lst, tipoDict palabra)
 	tipoNodo* nodoPal = crearNodo(palabra);
 	int pos = buscarPos(lst,nodoPal->info.palIngles);
 	int cont = 1;
+
 	if(pos == 1)
 	{
 		lst = lst->siguiente;
@@ -175,7 +176,34 @@ tipoNodo* eliminarPR(tipoNodo* lst, tipoDict palabra)
 			cont++;
 			aptNodo = aptNodo->siguiente;
 		}
-		aptNodo->siguiente = aptNodo->siguiente->siguiente ;
+		aptNodo->siguiente = aptNodo->siguiente->siguiente;
+	}
+	return lst;
+}
+
+tipoNodo* modificar(tipoNodo* lst, tipoDict palabra)
+{
+	tipoNodo* aptNodo = lst;
+	tipoNodo* nodoPal = crearNodo(palabra);
+	int pos = buscarPos(lst,nodoPal->info.palIngles);
+
+	int cont = 1;
+	char traduccion[50];
+	scanf("%s",traduccion);
+
+	if(pos == 1)
+	{
+		strcpy(lst->info.palEspanol,traduccion);
+	}
+
+	else
+	{
+		while(cont <= pos-1)
+		{
+			cont++;
+			aptNodo = aptNodo->siguiente;
+		}
+		strcpy(aptNodo->info.palEspanol,traduccion);
 	}
 	return lst;
 }
@@ -187,6 +215,12 @@ int main(){
 	tipoDict dict;
 	lista = crearNodo(dict);
 	lista = cargarDictToLista ("palabras.bin", lista);
+	printf("1. Salir del programa \n");
+	printf("2. Busqueda exacta \n");
+	printf("3. Adicionar palabra \n");
+	printf("4. Eliminar palabra\n");
+	printf("5. Modificar la traduccion de una palabra \n");
+	printf("6. Busqueda inteligente \n");
 
 	return 0;
 } 
