@@ -1,23 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "diccionario.h"
 
-struct Dict {
-	char palIngles  [50];
-	char palEspanol [50];
-};
-typedef struct Dict tipoDict;
-
-struct Nodo {
-	tipoDict info;
-	struct Nodo *siguiente;
-};
-
-typedef struct Nodo tipoNodo;
-
-tipoNodo *lista=NULL;
-
-tipoNodo *crearNodo (tipoDict dict) {
+tipoNodo* crearNodo (tipoDict dict){
 	tipoNodo *nodo = (tipoNodo *)malloc (sizeof (tipoNodo));
 
 	strcpy (nodo->info.palIngles, dict.palIngles);
@@ -45,7 +28,7 @@ tipoNodo* adicionarLista (tipoNodo *lista, tipoDict dict)
 	return lista;
 }
 
-int buscarPos(tipoNodo *lista, char * palabra) {
+int buscarPos(tipoNodo *lista, char * palabra){
 	int pos = 0;
 	if (lista == NULL) printf("LISTA VACIA");
 	tipoNodo *aptNodo = lista;
@@ -65,7 +48,7 @@ int buscarPos(tipoNodo *lista, char * palabra) {
 	return pos ;
 }
 
-void imprimirLista (tipoNodo *lista) {
+void imprimirLista (tipoNodo *lista){
 	tipoNodo *aptNodo = lista;
 	while (aptNodo != NULL) {
 		printf ("<%s>::<%s>\n", aptNodo->info.palIngles, aptNodo->info.palEspanol);
@@ -93,7 +76,7 @@ tipoNodo* cargarDictToLista (char *nombreArchivoBin, tipoNodo *lista)
 
 char *buscarPal (char* palBuscar, tipoNodo * lst)
 {
-	tipoNodo *p;
+	tipoNodo *p = lst;
 	char* pI = (char*) malloc ((sizeof(char)) *50);
 	char* pE = (char*) malloc ((sizeof(char)) *50);
 
@@ -101,8 +84,6 @@ char *buscarPal (char* palBuscar, tipoNodo * lst)
 
 	else
 	{
-		p = lst;
-
 		while (p  != NULL)
 		{
 			strcpy(pI,p ->info.palIngles);
@@ -125,6 +106,34 @@ char *buscarPal (char* palBuscar, tipoNodo * lst)
 
 	}
 }
+
+void salirPrograma()
+{}
+
+tipoNodo* insertarLista(tipoNodo* lst, tipoDict elemento, int pos)
+{
+	tipoNodo* nodoTmp = crearNodo(elemento);
+	tipoNodo* p = lst;
+	int cont = 1;
+	if(pos == 1)
+	{
+		nodoTmp->siguiente = lst;
+		lst = nodoTmp;
+	}
+	else
+	{
+		while(cont < pos-1)
+		{
+			cont++;
+			p = p->siguiente;
+		}
+		nodoTmp->siguiente = p->siguiente;
+		p->siguiente = nodoTmp;
+	}
+	return lst;
+}
+
+
 
 int main (int argc, char* argv[]){
 	tipoNodo *lista;
