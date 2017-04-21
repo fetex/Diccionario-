@@ -28,6 +28,26 @@ tipoNodo* adicionarLista (tipoNodo *lista, tipoDict dict)
 	return lista;
 }
 
+int buscarPos(tipoNodo *lista, char * palabra){
+	int pos = 0;
+	if (lista == NULL) printf("LISTA VACIA");
+	tipoNodo *aptNodo = lista;
+
+	while (aptNodo != NULL) {
+
+		if (strcmp(palabra, aptNodo -> info.palIngles) > 0)
+		{
+			pos ++;
+			aptNodo = aptNodo->siguiente;	
+		}
+
+		else
+			break;		
+	}
+
+	return pos ;
+}
+
 void imprimirLista (tipoNodo *lista){
 	tipoNodo *aptNodo = lista;
 	while (aptNodo != NULL) {
@@ -44,17 +64,15 @@ tipoNodo* cargarDictToLista (char *nombreArchivoBin, tipoNodo *lista)
 	int longitudBytes = sizeof (tipoDict);
 
 	while (fread (&dictTmp, longitudBytes, 1, manejadorBin) == 1) {
-		//printf ("<%s>:<%s>\n", dictTmp.palIngles, dictTmp.palEspanol);
 		lista = adicionarLista (lista, dictTmp);
 	}
 	fclose (manejadorBin);
 
 	return lista;
-
 }
 
 
-char* buscarPal (char* palBuscar, tipoNodo * lst)
+char *buscarPal (char* palBuscar, tipoNodo * lst)
 {
 	tipoNodo *p = lst;
 	char* pI = (char*) malloc ((sizeof(char)) *50);
@@ -87,14 +105,88 @@ char* buscarPal (char* palBuscar, tipoNodo * lst)
 	}
 }
 
+tipoNodo* insertarListaPos(tipoNodo* lst, tipoDict elemento, int pos)
+{
+	tipoNodo* nodoTmp = crearNodo(elemento);
+	tipoNodo* p = lst;
+	int cont = 1;
+	if(pos == 1)
+	{
+		nodoTmp->siguiente = lst;
+		lst = nodoTmp;
+	}
+	else
+	{
+		while(cont < pos-1)
+		{
+			cont++;
+			p = p->siguiente;
+		}
+		nodoTmp->siguiente = p->siguiente;
+		p->siguiente = nodoTmp;
+	}
+	return lst;
+}
+
+int buscarPosInsertar(tipoNodo* lst, char* palabra)
+{
+	tipoNodo* aptNodo = lst;
+	int pos = 1;
+	while(aptNodo != NULL)
+	{
+		if(strcmp(palabra,aptNodo->info.palIngles) > 0)
+		{
+			pos++;
+			aptNodo = aptNodo->siguiente;
+		}
+		else
+		{
+			break;
+		}
+	}
+	return pos;
+}
 
 
-int main (int argc, char* argv[]){
+tipoNodo* adicionarPr(tipoNodo* lst, tipoDict palabra)
+{
+	tipoNodo* aptNodo;
+	tipoNodo* nodoPal = crearNodo(palabra);
+	int pos = buscarPos(lst,nodoPal->info.palIngles);
+	aptNodo = insertarListaPos(lst, palabra, pos);
+
+	return aptNodo;
+}
+
+tipoNodo* eliminarPR(tipoNodo* lst, tipoDict palabra)
+{
+	tipoNodo* aptNodo = lst;
+	tipoNodo* nodoPal = crearNodo(palabra);
+	int pos = buscarPos(lst,nodoPal->info.palIngles);
+	int cont = 1;
+	if(pos == 1)
+	{
+		lst = lst->siguiente;
+	}
+	else
+	{
+		while(cont < pos-1)
+		{
+			cont++;
+			aptNodo = aptNodo->siguiente;
+		}
+		aptNodo->siguiente = aptNodo->siguiente->siguiente ;
+	}
+	return lst;
+}
+
+
+
+int main(){
 	tipoNodo *lista;
 	tipoDict dict;
 	lista = crearNodo(dict);
 	lista = cargarDictToLista ("palabras.bin", lista);
-	char* respuesta = buscarPal(argv[1],lista);
-	printf("<%s>:<%s>\n",argv[1],respuesta);
+
 	return 0;
-}
+} 

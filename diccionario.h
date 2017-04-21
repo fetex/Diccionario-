@@ -27,6 +27,9 @@ int buscarPos(tipoNodo* lista, char* palabra);
 void imprimirLista (tipoNodo* lista);
 tipoNodo* cargarDictToLista (char* nombreArchivoBin, tipoNodo* lista);
 char* buscarPal (char* palBuscar, tipoNodo* lst);
-void salirPrograma();
-//tipoNodo* insertarLista(tipoNodo* lst, tipoDict elemento, int pos);
+tipoNodo* insertarListaPos(tipoNodo* lst, tipoDict elemento, int pos);
+tipoNodo* adicionarPr(tipoNodo* lst, tipoDict palabra);
+int buscarPosInsertar(tipoNodo* lst, char* palabra);
+tipoNodo* eliminarPR(tipoNodo* lst, tipoDict palabra);
+
 #endif
