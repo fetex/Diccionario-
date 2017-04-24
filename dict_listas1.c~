@@ -32,13 +32,11 @@ int buscarPos(tipoNodo *lista, char * palabra){
 	int pos = 0;
 	if (lista == NULL) printf("LISTA VACIA");
 	tipoNodo *aptNodo = lista;
-	int holi = strcmp(palabra, aptNodo -> info.palIngles);
 
 	while (aptNodo != NULL) {
 
 		if (strcmp(palabra, aptNodo -> info.palIngles) > 0)
 		{
-			printf("%d", holi);
 			pos ++;
 			aptNodo = aptNodo->siguiente;	
 		}
@@ -222,7 +220,23 @@ tipoNodo* modificar(tipoNodo* lst, char* palabra)
 	return lst;
 }
 
-
+void guardarListaArchivo(tipoNodo *lst, char* nombreArchivo)
+{
+	FILE* archBin = fopen(nombreArchivo, "wb");
+	FILE* archTxt = fopen("backup.txt", "w");
+	tipoNodo* p = lst;
+	tipoDict* tmpInfo;
+	char cadena[150];
+	while(p != NULL)
+	{
+		tmpInfo = &(p->info);
+		fwrite(tmpInfo, sizeof(tipoDict),1,archBin);
+		sprintf(cadena,"<%s>: <%s>\n", tmpInfo->palIngles, tmpInfo->palEspanol);
+		fputs(cadena,archTxt);
+	}
+	fclose(archBin);
+	fclose(archTxt);
+}
 
 
 int main()

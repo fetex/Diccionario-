@@ -220,7 +220,24 @@ tipoNodo* modificar(tipoNodo* lst, char* palabra)
 	return lst;
 }
 
-
+void guardarListaArchivo(tipoNodo *lst, char* nombreArchivo)
+{
+	FILE* archBin = fopen(nombreArchivo, "wb");
+	FILE* archTxt = fopen("backup.txt", "w");
+	tipoNodo* p = lst;
+	tipoDict* tmpInfo;
+	char cadena[150];
+	while(p != NULL)
+	{
+		tmpInfo = &(p->info);
+		fwrite(tmpInfo, sizeof(tipoDict),1,archBin);
+		sprintf(cadena,"<%s>: <%s>\n", tmpInfo->palIngles, tmpInfo->palEspanol);
+		fputs(cadena,archTxt);
+		p = p-> siguiente;
+	}
+	fclose(archBin);
+	fclose(archTxt);
+}
 
 
 int main()
