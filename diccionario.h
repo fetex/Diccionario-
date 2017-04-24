@@ -30,6 +30,8 @@ char* buscarPal (char* palBuscar, tipoNodo* lst);
 tipoNodo* insertarListaPos(tipoNodo* lst, tipoDict elemento, int pos);
 tipoNodo* adicionarPr(tipoNodo* lst, tipoDict palabra);
 int buscarPosInsertar(tipoNodo* lst, char* palabra);
-tipoNodo* eliminarPR(tipoNodo* lst, tipoDict palabra);
+tipoNodo* eliminarPR(tipoNodo* lst, char * palabra);
+tipoNodo* modificar(tipoNodo* lst, char* palabra);
+
 
 #endif

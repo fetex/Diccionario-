@@ -128,6 +128,7 @@ tipoNodo* insertarListaPos(tipoNodo* lst, tipoDict elemento, int pos)
 	return lst;
 }
 
+
 int buscarPosInsertar(tipoNodo* lst, char* palabra)
 {
 	tipoNodo* aptNodo = lst;
@@ -158,11 +159,11 @@ tipoNodo* adicionarPr(tipoNodo* lst, tipoDict palabra)
 	return aptNodo;
 }
 
-tipoNodo* eliminarPR(tipoNodo* lst, tipoDict palabra)
+
+tipoNodo* eliminarPR(tipoNodo* lst, char * palabra)
 {
 	tipoNodo* aptNodo = lst;
-	tipoNodo* nodoPal = crearNodo(palabra);
-	int pos = buscarPos(lst,nodoPal->info.palIngles);
+	int pos = buscarPos(lst,palabra);
 	int cont = 1;
 
 	if(pos == 1)
@@ -181,13 +182,13 @@ tipoNodo* eliminarPR(tipoNodo* lst, tipoDict palabra)
 	return lst;
 }
 
-tipoNodo* modificar(tipoNodo* lst, tipoDict palabra)
+tipoNodo* modificar(tipoNodo* lst, char* palabra)
 {
 	tipoNodo* aptNodo = lst;
-	tipoNodo* nodoPal = crearNodo(palabra);
-	int pos = buscarPos(lst,nodoPal->info.palIngles);
+	int pos = buscarPos(lst,palabra);
 
 	int cont = 1;
+	printf("Escribir la traduccion correcta\n");
 	char traduccion[50];
 	scanf("%s",traduccion);
 
@@ -210,7 +211,8 @@ tipoNodo* modificar(tipoNodo* lst, tipoDict palabra)
 
 
 
-int main(){
+int main()
+{
 	tipoNodo *lista;
 	tipoDict dict;
 	lista = crearNodo(dict);
@@ -221,6 +223,48 @@ int main(){
 	printf("4. Eliminar palabra\n");
 	printf("5. Modificar la traduccion de una palabra \n");
 	printf("6. Busqueda inteligente \n");
+	printf("Elegir una opcion\n");
+	int opcion;
+	scanf("%d", &opcion);
+	
+	if(opcion == 2)
+	{
+		printf("Escribir la palabra\n");
+		char palabra[50];
+		scanf("%s", palabra);
+		char* respuesta = buscarPal(palabra,lista);
+		printf("<%s>:<%s>\n",palabra,respuesta);
+	}
+
+	else if(opcion == 3)
+	{
+		printf("Escribir la palabra\n");
+		char ingles[50];
+		printf("Escribir su traduccion\n");
+		char palEspa[50];
+		strcpy(dict.palIngles, ingles);
+		strcpy(dict.palEspanol, palEspa);
+		lista = adicionarPr(lista, dict);
+	}
+
+	else if(opcion == 4)
+	{
+		printf("Escribir la palabra\n");
+		char ingles[50];
+		lista = eliminarPR(lista, ingles);
+	}
+
+	else if(opcion == 5)
+	{
+		printf("Escribir la palabra\n");
+		char ingles[50];
+		lista = modificar(lista, ingles);
+	}
+
+	else
+	{
+		printf("Opcion equivocada\n");
+	}
 
 	return 0;
 } 
