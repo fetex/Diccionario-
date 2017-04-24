@@ -32,11 +32,13 @@ int buscarPos(tipoNodo *lista, char * palabra){
 	int pos = 0;
 	if (lista == NULL) printf("LISTA VACIA");
 	tipoNodo *aptNodo = lista;
+	int holi = strcmp(palabra, aptNodo -> info.palIngles);
 
 	while (aptNodo != NULL) {
 
 		if (strcmp(palabra, aptNodo -> info.palIngles) > 0)
 		{
+			printf("%d", holi);
 			pos ++;
 			aptNodo = aptNodo->siguiente;	
 		}
