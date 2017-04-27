@@ -117,7 +117,7 @@ tipoNodo* insertarListaPos(tipoNodo* lst, tipoDict elemento, int pos)
 	}
 	else
 	{
-		while(cont < pos-1)
+		while(cont < pos)
 		{
 			cont++;
 			p = p->siguiente;
