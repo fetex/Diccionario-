@@ -28,12 +28,7 @@ void main(){//Buscar archivo
 
                 printf("%s",x);
                 printf("\n");
-                //printf("%s",y);
-
-
-
-
-
+                //printf("%s",y); 
             }
 
         }
@@ -42,3 +37,4 @@ void main(){//Buscar archivo
     //getch();
 
 }
+
